@@ -17,4 +17,11 @@ app.get("/users", (req, res) => {
   ]);
 });
 
+const users = ["jahed", "tarek", "nuruddin", "romjan"];
+app.get("/user/:id", (req, res) => {
+  const id = req.params.id;
+  const user = users[id];
+  res.send({ id, user });
+});
+
 app.listen(3000, () => console.log("my sever port: 3000"));
