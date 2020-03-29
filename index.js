@@ -13,8 +13,8 @@ app.get("/user/:id", (req, res) => {
   res.send({ id, name });
 });
 
-app.post("/addUser", (req, res) => {
-  console.log(req.body);
+app.post("/user", (req, res) => {
+  res.send(req.body);
 });
 
 app.listen(3000, () => console.log("my sever port: 3000"));

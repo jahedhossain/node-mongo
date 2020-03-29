@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -13,21 +15,51 @@
                 <h1>mongo client</h1>
 
                 <div class="server-data-show">
-                    <p id="name"></p>
+                    <p id="email"></p>
+                    <p id="password"></p>
                 </div>
+
+                    <div class="form-group w-50">
+                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter your email" />
+                        <br>
+                        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Enter your password"/>
+                        <br>
+                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    </div>
+    
             </div>
         </div>
     </div>
 
 
     <script>
-        fetch('http://localhost:3000/user/3')
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('name').innerText = data.name
-        })
-        .catch(err => console.log(err))
-        
+
+
+            const submit = document.getElementById('submit');
+            submit.addEventListener('click', () => {
+                const exampleInputEmail = document.getElementById('exampleInputEmail').value
+                const exampleInputPassword = document.getElementById('exampleInputPassword').value
+                const user = {
+                    email: exampleInputEmail,
+                    password: exampleInputPassword
+                }
+                fetch('http://localhost:3000/user', {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+                    headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => userInfo(data))
+                .catch(err => console.log(err))
+            })
+
+            const userInfo = (data) => {
+                document.getElementById('email').innerText = 'Email: ' + data.email
+                document.getElementById('password').innerText = 'Password: ' + data.password
+            }
     </script>
 </body>
+
 </html>
