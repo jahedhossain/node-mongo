@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>mongo client</h1>
+
+                <div class="server-data-show">
+                    <p id="name"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        fetch('http://localhost:3000/user/3')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('name').innerText = data.name
+        })
+        .catch(err => console.log(err))
+        
+    </script>
+</body>
+</html>
