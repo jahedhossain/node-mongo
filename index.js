@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
 
 app.get("/", (req, res) => res.send("Hellofaf World!"));
+
 app.get("/users", (req, res) => {
   res.send([
     {
@@ -20,8 +24,8 @@ app.get("/users", (req, res) => {
 const users = ["jahed", "tarek", "nuruddin", "romjan"];
 app.get("/user/:id", (req, res) => {
   const id = req.params.id;
-  const user = users[id];
-  res.send({ id, user });
+  const name = users[id];
+  res.send({ id, name });
 });
 
 app.listen(3000, () => console.log("my sever port: 3000"));
