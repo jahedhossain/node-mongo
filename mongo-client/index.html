@@ -1,65 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>mongo client</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <h1>mongo client</h1>
 
-                <div class="server-data-show">
-                    <p id="email"></p>
-                    <p id="password"></p>
-                </div>
+          <div class="server-data-show">
+            <p id="showEmail"></p>
+            <p id="showPassword"></p>
+          </div>
 
-                    <div class="form-group w-50">
-                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter your email" />
-                        <br>
-                        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Enter your password"/>
-                        <br>
-                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                    </div>
-    
-            </div>
+          <div class="form-group w-50">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter your email"
+            />
+            <br />
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter your password"
+            />
+            <br />
+            <button type="submit" class="btn btn-primary" id="submit">
+              Submit
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
-
     <script>
+      const submit = document.getElementById("submit");
+      submit.addEventListener("click", () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const user = {
+          email,
+          password
+        };
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            userInfo(data);
+            console.log(data);
+            document.getElementById("email").value = '';
+            document.getElementById("password").value = '';
+          })
+          .catch(err => console.log(err));
+      });
 
-
-            const submit = document.getElementById('submit');
-            submit.addEventListener('click', () => {
-                const exampleInputEmail = document.getElementById('exampleInputEmail').value
-                const exampleInputPassword = document.getElementById('exampleInputPassword').value
-                const user = {
-                    email: exampleInputEmail,
-                    password: exampleInputPassword
-                }
-                fetch('http://localhost:3000/user', {
-                    method: 'POST',
-                    body: JSON.stringify(user),
-                    headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => userInfo(data))
-                .catch(err => console.log(err))
-            })
-
-            const userInfo = (data) => {
-                document.getElementById('email').innerText = 'Email: ' + data.email
-                document.getElementById('password').innerText = 'Password: ' + data.password
-            }
+      const userInfo = data => {
+        document.getElementById("showEmail").innerText = "Email: " + data.email;
+        document.getElementById("showPassword").innerText =
+          "Password: " + data.password;
+      };
     </script>
-</body>
-
+  </body>
 </html>
